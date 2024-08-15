@@ -41,7 +41,7 @@ export const POST = async (req: Request) => {
   try {
     const {email} = await req.json();
 
-    if (!email || !email.length || !isValidEmail(email)){
+    if (!email || !email.length || !isValidEmail(email) || email.length > 100){
       return new NextResponse("Invalid input", {status: 402});
     }
 
@@ -70,28 +70,28 @@ export const POST = async (req: Request) => {
         throw "Somehow account doesn't exist";
       }
 
-      if (exists.verified){
+      if (exists.verified || true){ //fixme: implement verification
         return NextResponse.json({
           status: 201,
           message: `Account already verified`,
         });
       } else {
-        if (hasSixtySecondsPassed(exists.lastCodeTime)){
-          //resend email.
-          if (await sendMailTo(exists.email, exists.code)) {
-            await db.account.update({
-              where: {
-                email: exists.email,
-              },
-              data: {
-                lastCodeTime: new Date(),
-              }
-            })
-          }
-        }
-        return NextResponse.json({
-          status: 200,
-        });
+        // if (hasSixtySecondsPassed(exists.lastCodeTime)){
+        //   //resend email.
+        //   if (await sendMailTo(exists.email, exists.code)) {
+        //     await db.account.update({
+        //       where: {
+        //         email: exists.email,
+        //       },
+        //       data: {
+        //         lastCodeTime: new Date(),
+        //       }
+        //     })
+        //   }
+        // }
+        // return NextResponse.json({
+        //   status: 200,
+        // });
       }
     }
   } catch (error){

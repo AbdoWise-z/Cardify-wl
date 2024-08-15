@@ -53,9 +53,19 @@ export const EmailInputForm = () => {
 
       if (data.status == 200){
         //open verify model
-        modal.open(ModalType.VERIFY_ACCOUNT_MODAL , {
-          email: values.email,
+        // fixme: implement actual verification
+        // modal.open(ModalType.VERIFY_ACCOUNT_MODAL , {
+        //   email: values.email,
+        // });
+
+        toast("Account Pre-registered!", {
+          description: `The account ${modal.data.email} has been pre-registered, thanks for your support.`,
+          action: {
+            label: "Cool",
+            onClick: () => {},
+          },
         });
+
       } else if (data.status == 201){
         //already pre-registered
         toast("Account Already Pre-registered", {
@@ -71,7 +81,7 @@ export const EmailInputForm = () => {
     } catch (e) {
       console.log(e);
       toast("Some Error happened ..", {
-        description: `${JSON.stringify(e)}`,
+        description: `Maybe check your input or internet connection.`,
         action: {
           label: "OK",
           onClick: () => {},
