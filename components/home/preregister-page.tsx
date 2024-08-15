@@ -8,7 +8,7 @@ const PreregisterPage = async () => {
 
   const preRegisterCount = await db.account.count({
     where: {
-      verified: true,
+      // verified: true,
     }
   });
 
