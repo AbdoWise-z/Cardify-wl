@@ -59,7 +59,7 @@ export const EmailInputForm = () => {
         // });
 
         toast("Account Pre-registered!", {
-          description: `The account ${modal.data.email} has been pre-registered, thanks for your support.`,
+          description: `The account ${values.email} has been pre-registered, thanks for your support.`,
           action: {
             label: "Cool",
             onClick: () => {},
