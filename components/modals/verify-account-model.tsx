@@ -4,62 +4,52 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 
 import { Button } from "../ui/button";
 
 import { useForm } from "react-hook-form";
-import * as z from "zod";
-import {zodResolver} from "@hookform/resolvers/zod";
 import {ModalType, useModal} from "@/hooks/use-modal";
-import {Input} from "@/components/ui/input";
 import {InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot} from "@/components/ui/input-otp";
 import axios from "axios";
 import {toast} from "sonner";
-import {useEffect, useState} from "react";
-
-const formSchema = z.object({
-  code: z.string().trim().min(6 , "code must be a 6-digit number").max(6, "code must be a 6-digit number"),
-});
+import {useEffect, useRef, useState} from "react";
+import {CircularProgress} from "@mui/material";
 
 export const VerifyAccountModel = () => {
 
   const modal = useModal();
   const isOpen = modal.isOpen && modal.type == ModalType.VERIFY_ACCOUNT_MODAL;
 
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      code: "",
-    }
-  });
-
-  const [failed , setFailed] = useState(false);
+  const ref = useRef<HTMLInputElement>(null);
+  const [state, setState] = useState({
+    submitting: false,
+    error: false,
+    errorStr: "",
+  })
 
   useEffect(() => {
-    setFailed(false);
-    form.reset();
-  } , [modal.data , form]);
+    setState({
+      submitting: false,
+      error: false,
+      errorStr: "",
+    })
+  }, [modal.data.email]);
 
-  const isLoading = form.formState.isSubmitting;
-
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const doSubmit = async (code: string) => {
     try {
+      setState({
+        submitting: true,
+        error: false,
+        errorStr: ""
+      })
+
       const res = await axios.post("/api/verify" , {
-        email: modal.data.email,
-        code: values.code,
+        email: modal.data.email ?? "aaa@gmail.com",
+        code: code,
       });
 
       const data = res.data;
@@ -75,9 +65,12 @@ export const VerifyAccountModel = () => {
 
         modal.close();
       } else {
-        setFailed(true);
+        setState({
+          submitting: false,
+          error: true,
+          errorStr: "The entered code is wrong."
+        })
       }
-      form.reset();
     } catch (e) {
       console.log(e);
       toast("Some Error happened ..", {
@@ -87,11 +80,34 @@ export const VerifyAccountModel = () => {
           onClick: () => {},
         },
       });
+
+      setState({
+        submitting: false,
+        error: false,
+        errorStr: ""
+      })
     }
   };
 
+
+  // Handle form submission
+  const handleSubmit = () => {
+    const code = ref.current?.value;
+    if (!code || code.length < 6){
+      setState({
+        submitting: false,
+        error: true,
+        errorStr: "Please enter a valid code."
+      })
+
+      return;
+    }
+
+    doSubmit(code);
+
+  };
+
   const handleClose = () => {
-    form.reset();
     modal.close();
   }
 
@@ -99,54 +115,43 @@ export const VerifyAccountModel = () => {
     <Dialog open={isOpen} onOpenChange={(open?) => {
       handleClose();
     }}>
-      <DialogContent className="bg-white text-black p-0 overflow-hidden">
-        <DialogHeader className="pt-8 px-6" >
-          <DialogTitle className="text-2xl text-left font-bold" >
-            Verify Account
-          </DialogTitle>
-          <DialogDescription className="text-left text-zinc-500">
-            We have sent an account verification code to <span className={"text-yellow-500 inline"}> {modal.data.email ?? "test@test.com"}</span>, please type the code blow.
+      <DialogContent className="sm:max-w-[400px]">
+        <DialogHeader>
+          <DialogTitle>Verify Your Code</DialogTitle>
+          <DialogDescription>
+            Please enter the 6-digit code sent to your email address to verify your account.
           </DialogDescription>
         </DialogHeader>
+        <div className="space-y-4 py-4 flex flex-col">
+          <InputOTP maxLength={6} ref={ref}>
+            <InputOTPGroup>
+              <InputOTPSlot index={0} />
+              <InputOTPSlot index={1} />
+              <InputOTPSlot index={2} />
+              <InputOTPSlot index={3} />
+              <InputOTPSlot index={4} />
+              <InputOTPSlot index={5} />
+            </InputOTPGroup>
+          </InputOTP>
+          <p className={"text-rose-400"} >{state.error ? state.errorStr : " "}</p>
+          <Button type="submit" className="ml-auto w-[40%]" onClick={handleSubmit}>
+            {!state.submitting && ("Verify Code")}
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <div className="space-y-8 px-8 py-4">
-              <FormField
-                control={form.control}
-                name="code"
-                render={({field}) => (
-                  <FormItem>
-                    <FormControl>
-                      <InputOTP maxLength={6} {...field}>
-                        <InputOTPGroup>
-                          <InputOTPSlot index={0} />
-                          <InputOTPSlot index={1} />
-                          <InputOTPSlot index={2} />
-                        </InputOTPGroup>
-                        <InputOTPSeparator />
-                        <InputOTPGroup>
-                          <InputOTPSlot index={3} />
-                          <InputOTPSlot index={4} />
-                          <InputOTPSlot index={5} />
-                        </InputOTPGroup>
-                      </InputOTP>
-
-                    </FormControl>
-                    <FormMessage/>
-                  </FormItem>
-                )}
-              />
-
-              {failed && <p className={"text-red-500 text-sm"}>Entered code is wrong.</p>}
-            </div>
-            <DialogFooter className="bg-gray-100 px-2 py-6">
-              <Button disabled={isLoading} variant={"secondary"}>
-                Pre-Register
-              </Button>
-            </DialogFooter>
-          </form>
-        </Form>
+            {state.submitting && (
+              <div className={"scale-50"}>
+                <svg width={0} height={0}>
+                  <defs>
+                    <linearGradient id="my_gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#e01cd5"/>
+                      <stop offset="100%" stopColor="#1CB5E0"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <CircularProgress sx={{'svg circle': {stroke: 'url(#my_gradient)'}}} className={"w-full h-full"}/>
+              </div>
+            )}
+          </Button>
+        </div>
       </DialogContent>
     </Dialog>
   );

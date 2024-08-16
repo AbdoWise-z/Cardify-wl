@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import {Inter, Manrope} from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 import theme from "tailwindcss/defaultTheme";
@@ -8,12 +8,27 @@ import ModalProvider from "@/components/providers/modal-provider";
 import {TooltipProvider} from "@/components/ui/tooltip";
 import {Toaster} from "@/components/ui/sonner";
 import {Modal} from "@mui/material";
+import {cn} from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
+
+const fontHeading = Manrope({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-heading',
+})
+
+const fontBody = Manrope({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-body',
+})
+
+
 export const metadata: Metadata = {
-  title: "BrainDash",
-  description: "BrainDash waitlist website :)",
+  title: "Cardify",
+  description: "The Cardify waitlist website",
 };
 
 export default function RootLayout({
@@ -28,7 +43,11 @@ export default function RootLayout({
         <Script strategy='lazyOnload' type="text/javascript" src="./fluids-script.js"/>
       </head>
 
-      <body className={inter.className}>
+      <body className={cn(
+        'antialiased',
+        fontHeading.variable,
+        fontBody.variable,
+      )}>
 
       <ThemeProvider
         attribute="class"

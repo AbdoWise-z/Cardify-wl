@@ -13,10 +13,9 @@ const PreregisterPage = async () => {
   });
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center">
-      <span className={"text-xl md:text-3xl font-bold pointer-events-none"}>
-        <p className={"inline-block text-yellow-500"}>Brain</p>
-        <p className={"inline-block"}>Dash</p>
+    <div className="w-full h-full flex flex-col items-center justify-center space-y-2">
+      <span className={"text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem] pointer-events-none"}>
+        <p className={"inline-block text-yellow-500"}>Cardify</p>
       </span>
       <div className={"text-sm md:text-xl pointer-events-none items-center justify-center content-center"}>
         <div className={"inline-block"} style={{

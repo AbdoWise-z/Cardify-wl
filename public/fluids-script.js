@@ -1439,8 +1439,8 @@ function correctRadius (radius) {
 }
 
 window.addEventListener('mousedown', e => {
-    let posX = scaleByPixelRatio(e.offsetX);
-    let posY = scaleByPixelRatio(e.offsetY);
+    let posX = scaleByPixelRatio(e.x + window.scrollX);
+    let posY = scaleByPixelRatio(e.y + window.scrollY);
     let pointer = pointers.find(p => p.id == -1);
     if (pointer == null)
         pointer = new pointerPrototype();
@@ -1450,8 +1450,8 @@ window.addEventListener('mousedown', e => {
 window.addEventListener('mousemove', e => {
     let pointer = pointers[0];
     if (!pointer.down) return;
-    let posX = scaleByPixelRatio(e.offsetX);
-    let posY = scaleByPixelRatio(e.offsetY);
+    let posX = scaleByPixelRatio(e.x + window.scrollX);
+    let posY = scaleByPixelRatio(e.y + window.scrollY);
     updatePointerMoveData(pointer, posX, posY);
 });
 

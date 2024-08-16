@@ -52,19 +52,17 @@ export const EmailInputForm = () => {
       const data = res.data;
 
       if (data.status == 200){
-        //open verify model
-        // fixme: implement actual verification
-        // modal.open(ModalType.VERIFY_ACCOUNT_MODAL , {
-        //   email: values.email,
-        // });
-
-        toast("Account Pre-registered!", {
-          description: `The account ${values.email} has been pre-registered, thanks for your support.`,
-          action: {
-            label: "Cool",
-            onClick: () => {},
-          },
+        modal.open(ModalType.VERIFY_ACCOUNT_MODAL , {
+          email: values.email,
         });
+
+        // toast("Account Pre-registered!", {
+        //   description: `The account ${values.email} has been pre-registered, thanks for your support.`,
+        //   action: {
+        //     label: "Cool",
+        //     onClick: () => {},
+        //   },
+        // });
 
       } else if (data.status == 201){
         //already pre-registered
@@ -94,7 +92,7 @@ export const EmailInputForm = () => {
   return (
     <Mounted>
       <div className={cn(
-        "w-[70%] md:w-[35%] lg:w-[25%] flex flex-row p-4 bg-neutral-900/70 rounded-xl border-2 border-amber-950 mt-4",
+        "w-[70%] md:w-[35%] lg:w-[25%] flex flex-row p-4 bg-neutral-900/70 rounded-xl border-2 border-green-950 mt-4",
         "hover:border-cyan-950 hover:rounded-2xl hover:py-6 transition-all",
         active && "border-yellow-400 hover:border-yellow-400 rounded-2xl py-6",
         active && "w-[80%] md:w-[40%] lg:w-[30%]",
