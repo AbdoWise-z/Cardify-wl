@@ -32,7 +32,7 @@ export const useModal = create<ModalStore>(
     },
     close() {
       set({
-        isOpen: false, type: null
+        isOpen: false, type: null, data: {}
       });
     },
   })

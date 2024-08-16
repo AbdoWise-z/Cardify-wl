@@ -134,7 +134,7 @@ export const VerifyAccountModel = () => {
             </InputOTPGroup>
           </InputOTP>
           <p className={"text-rose-400"} >{state.error ? state.errorStr : " "}</p>
-          <Button type="submit" className="ml-auto w-[40%]" onClick={handleSubmit}>
+          <Button type="submit" className="ml-auto w-[40%]" onClick={handleSubmit} disabled={state.submitting}>
             {!state.submitting && ("Verify Code")}
 
             {state.submitting && (

@@ -2,12 +2,10 @@ import type { Metadata } from "next";
 import {Inter, Manrope} from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
-import theme from "tailwindcss/defaultTheme";
 import {ThemeProvider} from "@/components/providers/theme-provider";
 import ModalProvider from "@/components/providers/modal-provider";
 import {TooltipProvider} from "@/components/ui/tooltip";
 import {Toaster} from "@/components/ui/sonner";
-import {Modal} from "@mui/material";
 import {cn} from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -29,6 +27,7 @@ const fontBody = Manrope({
 export const metadata: Metadata = {
   title: "Cardify",
   description: "The Cardify waitlist website",
+
 };
 
 export default function RootLayout({

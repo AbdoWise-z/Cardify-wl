@@ -30,12 +30,16 @@ export async function sendMailTo(email: string , code: string) {
 
 
   // Send the email
-  mail.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return console.log(error);
-    }
-    console.log('Email sent: ' + info.response);
-  });
+  return await new Promise<boolean>((resolve, reject) => {
+    mail.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        resolve(false);
+      }
+      console.log('Email sent: ' + info.response);
+      resolve(true);
+    });
+  })
 }
 
 
