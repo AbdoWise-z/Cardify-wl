@@ -29,8 +29,7 @@ const AssessmentsPage = () => {
                 <div className="grid gap-1">
                   <h3 className="text-xl font-bold">Adaptive Difficulty</h3>
                   <p className="text-muted-foreground">
-                    Assessments that adjust in complexity based on your performance, ensuring you're challenged at
-                    the right level.
+                    {"Assessments that adjust in complexity based on your performance, ensuring you're challenged at the right level."}
                   </p>
                 </div>
               </li>
@@ -38,7 +37,7 @@ const AssessmentsPage = () => {
                 <div className="grid gap-1">
                   <h3 className="text-xl font-bold">Personalized Feedback</h3>
                   <p className="text-muted-foreground">
-                    Receive detailed feedback and recommendations to help you identify and address your weaknesses.
+                    {"Receive detailed feedback and recommendations to help you identify and address your weaknesses."}
                   </p>
                 </div>
               </li>
