@@ -39,8 +39,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <Script strategy='lazyOnload' type="text/javascript" src="./dat.gui.min.js"/>
-        <Script strategy='lazyOnload' type="text/javascript" src="./fluids-script.js"/>
+        <Script strategy='afterInteractive' type="text/javascript" src="./dat.gui.min.js"/>
+        <Script strategy='afterInteractive' type="text/javascript" src="./fluids-script.js"/>
       </head>
 
       <body className={cn(

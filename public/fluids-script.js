@@ -26,6 +26,8 @@ SOFTWARE.
 
 // Simulation section
 
+console.log("Fluid Simulation Started");
+
 const canvas = document.getElementById("fluid-sim");
 resizeCanvas();
 
@@ -95,6 +97,7 @@ if (!ext.supportLinearFiltering) {
 // setTimeout(genRandom , 3000);
 
 function getWebGLContext (canvas) {
+    console.log("getWebGLContext");
     const params = { alpha: true, depth: false, stencil: false, antialias: false, preserveDrawingBuffer: false };
 
     let gl = canvas.getContext('webgl2', params);
@@ -132,6 +135,7 @@ function getWebGLContext (canvas) {
         formatR = getSupportedFormat(gl, gl.RGBA, gl.RGBA, halfFloatTexType);
     }
 
+    console.log("getWebGLContext: Complete");
     return {
         gl,
         ext: {
