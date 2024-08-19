@@ -7,6 +7,7 @@ import ModalProvider from "@/components/providers/modal-provider";
 import {TooltipProvider} from "@/components/ui/tooltip";
 import {Toaster} from "@/components/ui/sonner";
 import {cn} from "@/lib/utils";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,36 +38,38 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <GoogleAnalytics />
+
       <head>
-        <Script strategy='afterInteractive' type="text/javascript" src="./dat.gui.min.js"/>
-        <Script strategy='afterInteractive' type="text/javascript" src="./fluids-script.js"/>
-      </head>
+          <Script strategy='afterInteractive' type="text/javascript" src="./dat.gui.min.js"/>
+          <Script strategy='afterInteractive' type="text/javascript" src="./fluids-script.js"/>
+        </head>
 
-      <body className={cn(
-        'antialiased',
-        fontHeading.variable,
-        fontBody.variable,
-      )}>
+        <body className={cn(
+          'antialiased',
+          fontHeading.variable,
+          fontBody.variable,
+        )}>
 
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="dark"
-        enableSystem={false}
-        disableTransitionOnChange
-      >
-        <TooltipProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          <TooltipProvider>
 
-          <div className={"h-full flex flex-col"}>
-            <main className="w-full flex-1">
-              {children}
-            </main>
-          </div>
-          <ModalProvider />
-          <Toaster/>
-        </TooltipProvider>
-      </ThemeProvider>
+            <div className={"h-full flex flex-col"}>
+              <main className="w-full flex-1">
+                {children}
+              </main>
+            </div>
+            <ModalProvider />
+            <Toaster/>
+          </TooltipProvider>
+        </ThemeProvider>
 
-      </body>
+        </body>
     </html>
   );
 }
