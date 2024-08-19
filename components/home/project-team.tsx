@@ -71,7 +71,7 @@ const ProjectTeam = () => {
                 <h3 className="text-xl font-semibold">Shatha Dalhoumy</h3>
                 <p className="text-muted-foreground text-yellow-200">Backend Developer</p>
                 <p className="text-sm text-muted-foreground">
-                  She is also offline ...
+                {"Programming is the art of adding bugs to an empty text file."}
                 </p>
               </div>
             </div>
