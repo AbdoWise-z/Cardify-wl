@@ -54,9 +54,9 @@ const ProjectTeam = () => {
               </Avatar>
               <div className="text-center space-y-1">
                 <h3 className="text-xl font-semibold">Hibah Sindi</h3>
-                <p className="text-muted-foreground text-green-200">UI/UX Designer</p>
+                <p className="text-muted-foreground text-green-200">Data Science | UI/UX Designer</p>
                 <p className="text-sm text-muted-foreground">
-                  Why you guys never online ?
+                  The path will open up. Just keep moving forward without giving up.
                 </p>
               </div>
             </div>
