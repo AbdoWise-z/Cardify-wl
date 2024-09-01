@@ -6,11 +6,10 @@ import {db} from "@/lib/db";
 
 const PreregisterPage = async () => {
 
-  const preRegisterCount = await db.account.count({
+  const preRegisterCount = (await db.account.count({
     where: {
-      // verified: true,
     }
-  });
+  }));
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center space-y-2">
